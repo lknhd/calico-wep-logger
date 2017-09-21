@@ -1,0 +1,11 @@
+[Unit]
+Description=Calico workload endpoints logger
+
+[Service]
+ExecStart=/home/lukman/calico-wep-logger.sh
+
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
