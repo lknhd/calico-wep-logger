@@ -19,7 +19,6 @@ function get_workload {
 function get_addr {
   awk '{print $5}'
 }
-
 function wep_created {
   while true; do
     get_weps | while IFS= read -r wep
@@ -37,7 +36,6 @@ function wep_created {
     get_weps > ${tmpFolder}/${FUNCNAME[0]}_0
   done
 }
-
 function wep_released {
   while true; do
     get_weps > ${tmpFolder}/${FUNCNAME[0]}_1
@@ -56,11 +54,8 @@ function wep_released {
     mv ${tmpFolder}/${FUNCNAME[0]}_1 ${tmpFolder}/${FUNCNAME[0]}_0
   done
 }
+
 ############ main function ###############
-#if [[ "$#" -ne 1 ]]; then
-#  echo "Usage: calico-wep-logger.sh <created/released>"
-#  exit 1
-#fi
 tmpFolder=/tmp
 wepLogFile=/var/log/calico-wep.log
 if [[ $# -eq 0 ]] ; then
