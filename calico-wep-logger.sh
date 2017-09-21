@@ -7,7 +7,7 @@ function get_weps {
   # get workloadendpoints, always retry unless success
   while true;
   do
-    calicoctl get wep -o wide | grep -v WORKLOAD | sed '/^\s*$/d' 2 > /dev/null && break
+    calicoctl get wep -o wide | grep -v WORKLOAD | sed '/^\s*$/d' 2>/dev/null && break
   done
 }
 function get_node {
