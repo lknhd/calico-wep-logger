@@ -7,7 +7,7 @@ function get_weps {
   # get workloadendpoints, always retry unless success
   while true;
   do
-    calicoctl get wep -o wide | grep -v WORKLOAD | sed '/^\s*$/d' && break
+    calicoctl get wep -o wide | grep -v WORKLOAD | sed '/^\s*$/d' 2 > /dev/null && break
   done
 }
 function get_node {
@@ -24,17 +24,17 @@ function wep_created {
   while true; do
     get_weps | while IFS= read -r wep
     do
-      if ! ls "${tmpFolder}/${FUNCNAME[0]}_1" > /dev/null 2>&1; then
-        touch "${tmpFolder}/${FUNCNAME[0]}_1"
+      if ! ls "${tmpFolder}/${FUNCNAME[0]}_0" > /dev/null 2>&1; then
+        touch "${tmpFolder}/${FUNCNAME[0]}_0"
       fi
       output=""
-      output=$(grep $(echo ${wep} | get_workload) ${tmpFolder}/${FUNCNAME[0]}_1)
+      output=$(grep $(echo ${wep} | get_workload) ${tmpFolder}/${FUNCNAME[0]}_0)
       if [[ $output == "" ]]; then
         echo "found new wep: $(echo ${wep} | get_workload)"
         echo "$(date --iso-8601=seconds) workload=$(echo ${wep} | get_workload) addr=$(echo ${wep} | get_addr) created on node $(echo ${wep} | get_node)" >> ${wepLogFile}
       fi
     done
-    get_weps > ${tmpFolder}/${FUNCNAME[0]}_1
+    get_weps > ${tmpFolder}/${FUNCNAME[0]}_0
   done
 }
 
